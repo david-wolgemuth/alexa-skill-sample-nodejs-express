@@ -25,11 +25,11 @@ server.post('/', (req, res) => {
 
   // Initialize alexa sdk
   const alexa = Alexa.handler(req.body, context);
+  alexa.APP_ID = process.env.ALEXA_APP_ID;
   alexa.registerHandlers(handlers);
   alexa.execute();
 });
 
 // Start express server
-server.listen(process.env.PORT, () => {
-  console.log('Example app listening on port 3000!')
-});
+const port = process.env.PORT || 3000;
+server.listen(port, () => console.log(`started on port {port}`));

@@ -5,6 +5,9 @@ const handlers = {
   },
   'MoodWordIntent': function () {
     this.emit(':tell', 'Alright');
+  },
+  'Unhandled': function () {
+    this.emit(':ask', 'What is your overall mood from one to ten?');
   }
 };
 
