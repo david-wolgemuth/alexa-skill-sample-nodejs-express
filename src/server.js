@@ -14,11 +14,10 @@ server.post('/', (req, res) => {
   // Create dummy context with fail and succeed functions
   const context = {
     fail: () => {
-      // Simply fail with internal server error
       res.sendStatus(500);
     },
     succeed: data => {
-      // console.log(data)
+      console.log(data);
       res.send(data);
     }
   };
@@ -32,4 +31,4 @@ server.post('/', (req, res) => {
 
 // Start express server
 const port = process.env.PORT || 3000;
-server.listen(port, () => console.log(`started on port {port}`));
+server.listen(port, () => console.log(`started on port ${port}`));
