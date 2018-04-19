@@ -1,7 +1,10 @@
 // Alexa handlers
 const handlers = {
-  'HelloWorldIntent': function () {
-    this.emit(':tell', 'Hello World!');
+  'GeneralMoodIntent': function () {
+    this.emit(':tell', 'Thank you! What words describe your mood?');
+  },
+  'MoodWordIntent': function () {
+    this.emit(':tell', 'Alright');
   }
 };
 

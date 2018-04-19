@@ -30,6 +30,6 @@ server.post('/', (req, res) => {
 });
 
 // Start express server
-server.listen(3000, () => {
+server.listen(process.env.PORT, () => {
   console.log('Example app listening on port 3000!')
 });
