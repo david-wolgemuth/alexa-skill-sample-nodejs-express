@@ -7,7 +7,16 @@
     "start": "node src/server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["alexa", "skills", "kit", "sdk", "nodejs", "express", "server", "http"],
+  "keywords": [
+    "alexa",
+    "skills",
+    "kit",
+    "sdk",
+    "nodejs",
+    "express",
+    "server",
+    "http"
+  ],
   "author": "Michael Gloger",
   "license": "Apache-2.0",
   "engines": {
