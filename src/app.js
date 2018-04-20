@@ -1,7 +1,7 @@
 
 const rawHandlers = require('./handlers');
 
-module.exports = convertedHandlers = () => {
+module.exports = () => {
   const handlers = {};
   for (let intent in rawHandlers) {
     let intentName = intent.name.replace(/_/g, '.');  // AMAZON_HelpIntent -> AMAZON.HelpIntent

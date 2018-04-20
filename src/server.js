@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const Alexa = require('alexa-sdk');
 
-const handlers = require('./app');
+const app = require('./app');
 
 const server = express();
 server.use(bodyParser.json());
@@ -16,7 +16,7 @@ server.post('/', (req, res) => {
 
   const alexa = Alexa.handler(req.body, context);
   alexa.APP_ID = process.env.ALEXA_APP_ID;
-  alexa.registerHandlers(handlers);
+  alexa.registerHandlers(handlers());
   alexa.execute();
 });
 
