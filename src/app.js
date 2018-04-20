@@ -26,12 +26,10 @@ const handlers = {
     const moodWord = slotValue(this.event, 'MoodWord');
     const percent = slotValue(this.event, 'Percent');
     if (!percent) {
-      return this.emit(':elicitSlot', 'Percent', `What percent do you feel ${moodWord}?`, 'HEYA', {
-        slots: {
-          name: 'MoodWord',
-          value: moodWord
-        }
-      });
+      if (moodWord.toLowerCase() == 'happy') {
+        return this.emit(':delegate');
+      }
+      return this.emit(':elicitSlot', 'Percent', 'Whaaaat?', 'Cuuttt?', this.event.request.intent)
     }
     if (!moodWord) {
       return this.emit(':tell', 'Hm. that was weird.');
