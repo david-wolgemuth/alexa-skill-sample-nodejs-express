@@ -1,12 +1,12 @@
 const HELP_PHRASE = 'Say something like, "My overall mood is eight out of ten", or "I am feeling ninety percent happy". How are you feeling?';
 
-export const LaunchRequest = handler => handler.emit('AMAZON.HelpIntent');
+module.exports.LaunchRequest = handler => handler.emit('AMAZON.HelpIntent');
 
-export const AMAZON_HelpIntent = handler => handler.ask(HELP_PHRASE);
+module.exports.AMAZON_HelpIntent = handler => handler.ask(HELP_PHRASE);
 
-export const Unhandled = handler => handler.ask('Sorry, I am not sure how to handle that one.');
+module.exports.Unhandled = handler => handler.ask('Sorry, I am not sure how to handle that one.');
 
-export const GeneralMoodIntent = handler => {
+module.exports.GeneralMoodIntent = handler => {
   const mood = handler.slots.OverallMood;
 
   if (mood < 0 || mood > 10) {
@@ -22,7 +22,7 @@ export const GeneralMoodIntent = handler => {
   handler.ask(question, HELP_PHRASE);
 };
 
-export const MoodWordIntent = handler => {
+module.exports.MoodWordIntent = handler => {
   const moodWord = handler.slots.MoodWord;
   const percent = handler.slots.Percent;
 
