@@ -1,36 +1,39 @@
-// Alexa handlers
 const handlers = {
+  'LaunchRequest': function () {
+    this.emit('AMAZON.HelpIntent');
+  },
   'GeneralMoodIntent': function () {
-    console.log('GeneralMoodIntent', JSON.stringify(this.event));
     const mood = slotValue(this.event, 'OverallMood');
     if (mood < 0 || mood > 10) {
-      return this.emit(
-        ':ask',
-        'Sorry, please say a number between 1 and 10.  What is your mood?',
-        'Again?'
-      );
+      this.emit(':tell', 'Sorry, please say a number between 1 and 10.')
+      return this.emit(':ask', 'What is your mood?');
     } 
     if (mood < 5) {
-      return this.emit(
-        ':ask',
-        'Sorry you feel that way. What word describes your mood?',
-        'Again?'
-      );
+      this.emit(':tell', 'Sorry you feel that way.');
+      return this.emit(':ask', 'What word describes your mood?');
     } else {
-      return this.emit(
-        ':ask',
-        'Thank you! What words describe your mood?',
-        'Again?'
-      );
+      this.emit(':tell', 'Thank you!');
+      return this.emit(':ask', 'What words describe your mood?');
     }
   },
   'MoodWordIntent': function () {
-    console.log('MoodWordIntent', JSON.stringify(this.event));
-    this.emit(':ask', 'Alright.  Do you have other words to describe your mood?', 'What?');
+    const moodWord = slotValue(this.event, 'MoodWord');
+    const percent = slotValue(this.event, 'Percent');
+    if (!percent) {
+      return this.emit(':elicitSlot', 'Percent');
+    }
+    if (!moodWord) {
+      return this.emit(':tell', 'Hm. that was weird.');
+    }
+    this.emit(':ask', 'Alright.  Do you have other words to describe your mood?');
+  },
+  'AMAZON.HelpIntent': function () {
+    this.emit(':tell', 'Say something like, "My overall mood is 8 out of 10", or "I am feeling ninety percent happy".');
+    this.emit(':ask', 'How do you feel?');
   },
   'Unhandled': function () {
-    console.log('Unhandled', JSON.stringify(this.event));
-    this.emit(':ask', 'What is your overall mood from one to ten?', 'What?');
+    this.emit(':tell', 'Sorry, I\'m not sure how to handle that one.');
+    this.emit('AMAZON.HelpIntent');
   }
 };
 
