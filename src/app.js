@@ -21,6 +21,10 @@ const convertHandler = (handler) => function () {
 };
 
 const getSlots = handle => {
+  const intent = handle.event.request.intent;
+  if (!intent) {
+    return null;
+  }
   const rawSlots = handle.event.request.intent.slots;
   const slots = {};
   for (let slotName in rawSlots) {
