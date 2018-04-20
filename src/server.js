@@ -16,7 +16,7 @@ server.post('/', (req, res) => {
 
   const alexa = Alexa.handler(req.body, context);
   alexa.APP_ID = process.env.ALEXA_APP_ID;
-  alexa.registerHandlers(handlers());
+  alexa.registerHandlers(app());
   alexa.execute();
 });
 
