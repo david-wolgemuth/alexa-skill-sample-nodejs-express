@@ -1,5 +1,6 @@
-
 const rawHandlers = require('./handlers');
+const mongoose = require('mongoose');
+const User = mongoose.model('User');
 
 module.exports = () => {
   const handlers = {};
@@ -15,8 +16,9 @@ const convertHandler = (handler) => function () {
   handle.slots = getSlots(this);
   handle.ask = ask;
   handle.requestMissingInfo = requestMissingInfo;
-  handle.user = fetchUser(this.event);
+  handle.user = fetchUserRequest;
   handle.unhandled = unhandled;
+  handle.handleError = handleError;
   handler(handle);
 };
 
@@ -33,17 +35,17 @@ const getSlots = handle => {
   return slots;
 };
 
+const handleError = function (error) {
+  this.emit(':tell', `Sorry, I am having a problem. ${error.message}.`);
+};
+
 const ask = function (question, prompt) {
   this.emit(':ask', question, prompt);
 };
 
-const fetchUser = event => {
-  const userId = event.context.System.user.userId;
-  return {
-    userId,
-    addMoodWord: function () { console.log('ADD MOOD WORD', arguments); },
-    addOverallMood: function () { console.log('ADD OVERALL MOOD', arguments); }
-  };
+const fetchUser = function() {
+  const amazonUserId = this.event.context.System.user.userId;
+  return User.findOne({ amazonUserId });
 };
 
 const requestMissingInfo = function() {

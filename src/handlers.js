@@ -13,13 +13,15 @@ module.exports.GeneralMoodIntent = handler => {
     return handler.ask('Sorry, please say a number between 1 and 10.  What is your mood?', HELP_PHRASE);
   } 
 
-  handler.user.addOverallMood(mood);
-
-  const question = (mood < 5) ?
-    'Sorry you feel that way. What word describes your mood?':
-    'Thank you! What words describe your mood?';
-
-  handler.ask(question, HELP_PHRASE);
+  handler.fetchUser()
+    .then(user => user.addOverallMood(mood))
+    .then(() => {
+      const question = (mood < 5) ?
+        'Sorry you feel that way. What word describes your mood?':
+        'Thank you! What words describe your mood?';
+      handler.ask(question, HELP_PHRASE);
+    }) 
+    .catch(err => handler.handleError(err));
 };
 
 module.exports.MoodWordIntent = handler => {
@@ -39,10 +41,13 @@ module.exports.MoodWordIntent = handler => {
     );
   }
 
-  handler.user.addMoodWord(moodWord, percent);
+  handler.fetchUser()
+    .then(user => user.addMoodWord(moodWord, percent))
+    .then(() => {
+      handler.ask(
+        'Alright.  Do you have other words to describe your mood?', HELP_PHRASE
+      );
+    })
+    .catch(error => handler.handleError(error);
 
-  handler.ask(
-    'Alright.  Do you have other words to describe your mood?', HELP_PHRASE
-  );
 };
-
