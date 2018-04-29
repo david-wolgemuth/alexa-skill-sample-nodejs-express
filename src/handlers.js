@@ -21,7 +21,7 @@ module.exports.GeneralMoodIntent = handler => {
         'Thank you! What words describe your mood?';
       handler.ask(question, HELP_PHRASE);
     }) 
-    .catch(err => handler.handleError(err));
+    .catch(err => handler.error(err));
 };
 
 module.exports.MoodWordIntent = handler => {
@@ -48,6 +48,5 @@ module.exports.MoodWordIntent = handler => {
         'Alright.  Do you have other words to describe your mood?', HELP_PHRASE
       );
     })
-    .catch(error => handler.handleError(error);
-
+    .catch(error => handler.handleError(error));
 };
