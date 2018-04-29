@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const Alexa = require('alexa-sdk');
 
+require('./db');
 const app = require('./app');
 
 const server = express();
